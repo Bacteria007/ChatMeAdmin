@@ -1,0 +1,20 @@
+# OS-generated files
+.DS_Store
+.idea/
+.vscode/
+
+# Build files
+android/app/build/
+ios/build/
+android/build/
+ios/Pods/
+
+# Dependency directories
+node_modules/
+ios/Pods/
+ios/Podfile.lock
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
