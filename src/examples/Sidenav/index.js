@@ -78,7 +78,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           />
         </Link>
       ) : (
-        <NavLink to={route} key={key}>
+        <NavLink to={route} key={key} >
           <SidenavCollapse
             color={color}
             key={key}
@@ -143,7 +143,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       </SoftBox>
       <Divider />
       <List>{renderRoutes}</List>
-      
+
     </SidenavRoot>
   );
 }
