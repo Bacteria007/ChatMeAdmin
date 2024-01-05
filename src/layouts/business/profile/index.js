@@ -36,13 +36,14 @@ import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 import Sidenav from "examples/Sidenav";
 import shopRoutes from "routes/shopRoutes";
+import { appName } from "context";
 
 function Overview() {
   return (
     <DashboardLayout>
      <Sidenav
         color="info"
-        brandName="Billa Technologies"
+        brandName={appName}
         routes={shopRoutes}       
       /> 
       <Header />
@@ -170,7 +171,7 @@ function Overview() {
         </Card>
       </SoftBox>
 
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

@@ -11,20 +11,21 @@ import DefaultBlogCard from "examples/Cards/BlogCards/DefaultBlogCard";
 import Sidenav from "examples/Sidenav";
 
 import shopRoutes from "routes/shopRoutes";
+import { appName } from "context";
 
 
 
 function Dashboard() {
-  const brand = "";
+  const brand = appName;
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <Sidenav
         color="info"
-        brandName="Billa Technologies"
-        routes={shopRoutes}       
+        brandName={appName}
+        routes={shopRoutes} 
       /> 
-      <SoftBox py={3}>
+      {/* <SoftBox py={3}>
         <SoftBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} xl={3}>
@@ -66,9 +67,11 @@ function Dashboard() {
         </SoftBox>   
       </SoftBox>
       <SoftBox py={10}>
+    </SoftBox> */}
 
-      </SoftBox>
-      <Footer />
+
+      {/* <Footer /> */}
+
     </DashboardLayout>
   );
 }

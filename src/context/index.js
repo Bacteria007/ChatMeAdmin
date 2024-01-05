@@ -1,5 +1,3 @@
-
-
 import { createContext, useContext, useReducer, useMemo } from "react";
 
 // prop-types is a library for typechecking of props
@@ -89,7 +87,24 @@ const setFixedNavbar = (dispatch, value) => dispatch({ type: "FIXED_NAVBAR", val
 const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGURATOR", value });
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
+const appName = "ChatMe"
+const baseUrl = 'http://192.168.43.145:8888';
+const formatDate = (unformatedDate) => {
 
+  // Convert MongoDB timestamp to JavaScript Date object
+  const date = new Date(unformatedDate);
+
+  // Format the date using Intl.DateTimeFormat
+  return  new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZone: 'UTC', // Adjust timezone as needed
+  }).format(date);
+}
 export {
   SoftUIControllerProvider,
   useSoftUIController,
@@ -101,4 +116,7 @@ export {
   setOpenConfigurator,
   setDirection,
   setLayout,
+  formatDate,
+  appName,
+  baseUrl
 };

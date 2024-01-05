@@ -15,25 +15,29 @@ import Table from "examples/Tables/Table";
 import authorsTableData from "./data/authorsTableData";
 import Sidenav from "examples/Sidenav";
 import shopRoutes from "routes/shopRoutes";
+import { useState } from "react";
+import { useEffect } from "react";
+import { appName } from "context";
 // import projectsTableData from "./data/projectsTableData";
 
 function Customer() {
-  const { columns, rows } = authorsTableData;
-  // const { columns: prCols, rows: prRows } = projectsTableData;
+  const { columns, rows } = authorsTableData()
+  console.log("@@@@@@@@@@@@@@",rows)
 
+  // const { columns: prCols, rows: prRows } = projectsTableData;
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <Sidenav
         color="info"
-        brandName="Billa Technologies"
+        brandName={appName}
         routes={shopRoutes}       
       /> 
       <SoftBox py={3}>
         <SoftBox mb={3}>
           <Card>
             <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SoftTypography variant="h6">Customers List</SoftTypography>
+              <SoftTypography variant="h6">Users List</SoftTypography>
             </SoftBox>
             <SoftBox
               sx={{
@@ -50,7 +54,7 @@ function Customer() {
           </Card>
         </SoftBox>
       </SoftBox>
-      <Footer />
+      {/* <Footer /> */}
     </DashboardLayout>
   );
 }

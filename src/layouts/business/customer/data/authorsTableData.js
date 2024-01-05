@@ -4,13 +4,17 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 import SoftBadge from "components/SoftBadge";
+import SoftButton from "components/SoftButton";
 
 // Images
 import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
+import { Fragment, useEffect, useState } from "react";
+import { Icon } from "@mui/material";
+import { baseUrl } from "context";
+import { formatDate } from "context";
 
-function Author({ image, name, email }) {
+function Author({ image, name, phone }) {
+
   return (
     <SoftBox display="flex" alignItems="center" px={1} py={0.5}>
       <SoftBox mr={2}>
@@ -21,7 +25,7 @@ function Author({ image, name, email }) {
           {name}
         </SoftTypography>
         <SoftTypography variant="caption" color="secondary">
-          {email}
+          {phone}
         </SoftTypography>
       </SoftBox>
     </SoftBox>
@@ -41,109 +45,108 @@ function Function({ job, org }) {
   );
 }
 
-const authorsTableData = {
-  columns: [
-    { name: "customer", align: "left" },
-    { name: "function", align: "left" },
-    { name: "status", align: "center" },
-    { name: "employed", align: "center" },
-    { name: "action", align: "center" },
-  ],
+const authorsTableData = () => {
+ 
+  const [allUsers, setAllUsers] = useState([])
 
-  rows: [
-    {
-      customer: <Author image={team2} name="John Michael" email="john@creative-tim.com" />,
-      function: <Function job="Manager" org="Organization" />,
-      status: (
-        <SoftBadge variant="gradient" badgeContent="online" color="success" size="xs" container />
-      ),
-      employed: (
-        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-          23/04/18
-        </SoftTypography>
-      ),
-      action: (
-        <SoftTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="secondary"
-          fontWeight="medium"
-        >
-          Edit
-        </SoftTypography>
-      ),
-    },
-    {
-      customer: <Author image={team3} name="Alexa Liras" email="alexa@creative-tim.com" />,
-      function: <Function job="Programator" org="Developer" />,
-      status: (
-        <SoftBadge variant="gradient" badgeContent="offline" color="secondary" size="xs" container />
-      ),
-      employed: (
-        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-          11/01/19
-        </SoftTypography>
-      ),
-      action: (
-        <SoftTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="secondary"
-          fontWeight="medium"
-        >
-          Edit
-        </SoftTypography>
-      ),
-    },
-    {
-      customer: <Author image={team4} name="Laurent Perrier" email="laurent@creative-tim.com" />,
-      function: <Function job="Executive" org="Projects" />,
-      status: (
-        <SoftBadge variant="gradient" badgeContent="online" color="success" size="xs" container />
-      ),
-      employed: (
-        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-          19/09/17
-        </SoftTypography>
-      ),
-      action: (
-        <SoftTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="secondary"
-          fontWeight="medium"
-        >
-          Edit
-        </SoftTypography>
-      ),
-    },
-    {
-      customer: <Author image={team3} name="Michael Levi" email="michael@creative-tim.com" />,
-      function: <Function job="Programator" org="Developer" />,
-      status: (
-        <SoftBadge variant="gradient" badgeContent="online" color="success" size="xs" container />
-      ),
-      employed: (
-        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-          24/12/08
-        </SoftTypography>
-      ),
-      action: (
-        <SoftTypography
-          component="a"
-          href="#"
-          variant="caption"
-          color="secondary"
-          fontWeight="medium"
-        >
-          Edit
-        </SoftTypography>
-      ),
+  const fetchUsers = async () => {
+    const result = await fetch(`${baseUrl}/allUsers`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (result.ok) {
+      const fetchedUsersList = await result.json()
+      console.log('alluser*********', fetchedUsersList)
+      setAllUsers(fetchedUsersList)
+      console.log('alluser&&&&&', allUsers)
     }
-  ],
+    else {
+      console.log(`authorsTable mn fetchusers mn error`)
+    }
+  }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+  return {
+    columns: [
+      // { name: "User_Name", align: "left" },
+      // { name: "PhoneNumber", align: "left" },
+      // { name: "Profile_Image", align: "left" },
+      // { name: "function", align: "left" },
+      { name: "user", align: "left" },
+      { name: "status", align: "center" },
+      { name: "registered", align: "center" },
+      { name: "action", align: "center" },
+    ],
+
+    rows: allUsers.map((user) => (
+      {
+        // User_Name: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+        // {user.name}
+        // </SoftTypography>,
+        // PhoneNumber: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+        //   {user.phoneNo}
+        // </SoftTypography>,
+        // Profile_Image: <Author image={`${baseUrl}${user.profileImage}`} />,
+        user: <Author image={`${baseUrl}${user.profileImage}`} name={user.name} phone={user.phoneNo} />,
+        // function: <Function job="Manager" org="Organization" />,
+        status: (
+          <SoftBadge variant="gradient" badgeContent={user.isActive == true ? "active" : "not active"} color="success" size="xs" container />
+        ),
+        registered: (
+          <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+            {formatDate(user.createdAt)}
+          </SoftTypography>
+        ),
+        action: (
+          <Fragment>
+            {/* <SoftTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="secondary"
+              fontWeight="medium"
+            >
+              Freez
+            </SoftTypography><br />
+            <SoftTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="primary"
+              fontWeight="medium"
+            >
+              Delete
+            </SoftTypography> */}
+           <SoftButton
+              // component={Link}
+              // to={action.route}
+              variant="gradient"
+              color={"success"}
+              small
+              iconOnly
+            ><Icon sx={{ fontWeight: "bold" }}>edit</Icon>
+            </SoftButton> &nbsp;
+            <SoftButton
+              // component={Link}
+              // to={action.route}
+              variant="gradient"
+              color={"error"}
+              small
+              iconOnly
+            ><Icon sx={{ fontWeight: "bold" }}>delete</Icon>
+            </SoftButton>
+          </Fragment>
+        ),
+      }
+    ))
+
+  }
+
 };
 
 export default authorsTableData;
