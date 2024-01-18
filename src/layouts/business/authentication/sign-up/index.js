@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -35,61 +35,85 @@ import Separator from "layouts/business/authentication/components/Separator";
 
 // Images
 import curved6 from "assets/images/curved-images/curved14.jpg";
+import { baseUrl } from "context";
+import axios from "axios";
 
 function SignUp() {
-  const [agreement, setAgremment] = useState(true);
 
-  const handleSetAgremment = () => setAgremment(!agreement);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate();
+
+
+  //Signin Function
+  const signup = () => {
+    console.log('login', email, '====signup=====', password)
+
+    const formdata = new FormData();
+    formdata.append('name', name);
+    formdata.append('email', email);
+    formdata.append('password', password);
+    // formdata.append('fcmToken', fcmToken);
+    axios({
+      method: 'post',
+      url: `${baseUrl}/adminSignup`,
+      data: formdata,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(async function (response) {
+        if (response.data.save) {
+          const res = await response.data.newAdmin
+          console.log("signup", res)
+          await localStorage.setItem('isAdminLoggedIn', JSON.stringify(true))
+          await localStorage.setItem('adminId', res._id)
+          await localStorage.setItem('email', res.email)
+          navigate('/dashboard');
+        }
+        else {
+          console.log("=========else==")
+          if (response.data.newAdmin == "An admin with the same email already exists.") {
+            alert('email already registered');
+          } else {
+            alert("cannot create account");
+          }
+        }
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  }
 
   return (
     <BasicLayout
       title="Welcome!"
-      description="Use these awesome forms to login or create new account in your project for free."
+      // description="Use these awesome forms to login or create new account in your project for free."
       image={curved6}
     >
       <Card>
-        <SoftBox p={3} mb={1} textAlign="center">
+        {/* <SoftBox p={3} mb={1} textAlign="center">
           <SoftTypography variant="h5" fontWeight="medium">
             Register with
           </SoftTypography>
         </SoftBox>
         <SoftBox mb={2}>
           <Socials />
-        </SoftBox>
-        <Separator />
+        </SoftBox> */}
+        {/* <Separator /> */}
         <SoftBox pt={2} pb={3} px={3}>
           <SoftBox component="form" role="form">
             <SoftBox mb={2}>
-              <SoftInput placeholder="Name" />
+              <SoftInput placeholder="Name" onChange={(e) => setName(e.target.value)} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="email" placeholder="Email" />
+              <SoftInput type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="password" placeholder="Password" />
+              <SoftInput type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
             </SoftBox>
-            <SoftBox display="flex" alignItems="center">
-              <Checkbox checked={agreement} onChange={handleSetAgremment} />
-              <SoftTypography
-                variant="button"
-                fontWeight="regular"
-                onClick={handleSetAgremment}
-                sx={{ cursor: "poiner", userSelect: "none" }}
-              >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </SoftTypography>
-              <SoftTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                textGradient
-              >
-                Terms and Conditions
-              </SoftTypography>
-            </SoftBox>
+
             <SoftBox mt={4} mb={1}>
-              <SoftButton variant="gradient" color="dark" fullWidth>
+              <SoftButton variant="gradient" color="dark" fullWidth onClick={() => signup()}>
                 sign up
               </SoftButton>
             </SoftBox>
@@ -98,7 +122,7 @@ function SignUp() {
                 Already have an account?&nbsp;
                 <SoftTypography
                   component={Link}
-                  to="/authentication/sign-in"
+                  to="/"
                   variant="button"
                   color="dark"
                   fontWeight="bold"

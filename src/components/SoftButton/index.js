@@ -22,6 +22,7 @@ import PropTypes from "prop-types";
 import SoftButtonRoot from "components/SoftButton/SoftButtonRoot";
 
 const SoftButton = forwardRef(
+
   ({ color, variant, size, circular, iconOnly, children, ...rest }, ref) => (
     <SoftButtonRoot
       {...rest}

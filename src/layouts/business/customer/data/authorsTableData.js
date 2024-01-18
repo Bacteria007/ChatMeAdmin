@@ -46,7 +46,7 @@ function Function({ job, org }) {
 }
 
 const authorsTableData = () => {
- 
+
   const [allUsers, setAllUsers] = useState([])
 
   const fetchUsers = async () => {
@@ -67,7 +67,22 @@ const authorsTableData = () => {
       console.log(`authorsTable mn fetchusers mn error`)
     }
   }
+const freezeUser = async () => {
+    const result = await fetch(`${baseUrl}/freezeUser`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
+    if (result.ok) {
+      const res = await result.json()
+      console.log('freeze res *********', res)
+    }
+    else {
+      console.log(`error in freezing`)
+    }
+  }
   useEffect(() => {
     fetchUsers()
   }, [])
@@ -104,12 +119,13 @@ const authorsTableData = () => {
         ),
         action: (
           <Fragment>
-            {/* <SoftTypography
+            <SoftTypography
               component="a"
               href="#"
               variant="caption"
               color="secondary"
               fontWeight="medium"
+              onClick={() => freezeUser(user._id)}
             >
               Freez
             </SoftTypography><br />
@@ -120,9 +136,9 @@ const authorsTableData = () => {
               color="primary"
               fontWeight="medium"
             >
-              Delete
-            </SoftTypography> */}
-           <SoftButton
+              View
+            </SoftTypography>
+            {/* <SoftButton
               // component={Link}
               // to={action.route}
               variant="gradient"
@@ -139,7 +155,7 @@ const authorsTableData = () => {
               small
               iconOnly
             ><Icon sx={{ fontWeight: "bold" }}>delete</Icon>
-            </SoftButton>
+            </SoftButton> */}
           </Fragment>
         ),
       }
