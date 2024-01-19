@@ -23,7 +23,7 @@ import { baseUrl } from "context";
 
 function ViewUser() {
     const params = useParams();
-    const {id}=params
+    const { id } = params
     const [userdetails, setUserdetails] = useState([]);
     const fetchUserDetails = async () => {
         console.log('jjjjjjjjj', id)
@@ -33,9 +33,11 @@ function ViewUser() {
         })
 
         if (result.ok) {
-            const fetchedUsersList = await result.json()
-            console.log('alluser*********', fetchedUsersList)
-          
+            const userDetailsObj = await result.json()
+            console.log('alluser*********', userDetailsObj)
+            setUserdetails(userDetailsObj.user)
+            // console.log('alluser*********')
+
         }
         else {
             console.log(`authorsTable mn fetchusers mn error`)
@@ -56,7 +58,8 @@ function ViewUser() {
                 <SoftBox mb={3}>
                     <Card>
                         <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                            <SoftTypography variant="h6">Username</SoftTypography>
+                            <SoftTypography variant="h6">User</SoftTypography>
+                            {/* <SoftTypography variant="h6">{userdetails? userdetails.user.user.name: "user"}</SoftTypography> */}
                         </SoftBox>
                         <SoftBox
                             sx={{
@@ -69,7 +72,13 @@ function ViewUser() {
                             }}
                         >
                             {/* <Table columns={[]} rows={[{ name: "user", align: "left" },{ name: "Friends", align: "left" },{ name: "Groups", align: "left" }]} /> */}
-                       
+                            {
+                                userdetails.map((user)=>{
+                                    return (
+                                        <h1>{user.friends}</h1>
+                                    )
+                                })
+                            }
                         </SoftBox>
                     </Card>
                 </SoftBox>

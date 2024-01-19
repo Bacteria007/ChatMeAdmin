@@ -128,7 +128,7 @@ const authorsTableData = () => {
               variant="caption"
               color="primary"
               fontWeight="medium"
-            onClick={() => navigate(`/userDetail/${user}`)}
+            onClick={() => navigate(`/userDetail/${user._id}`)}
             >
               
                 View
