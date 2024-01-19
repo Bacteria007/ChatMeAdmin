@@ -48,13 +48,11 @@ function Function({ job, org }) {
 const authorsTableData = () => {
 
   const [allUsers, setAllUsers] = useState([])
-
   const fetchUsers = async () => {
+    console.log('jjjjjjjjj')
     const result = await fetch(`${baseUrl}/allUsers`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     })
 
     if (result.ok) {
@@ -67,8 +65,9 @@ const authorsTableData = () => {
       console.log(`authorsTable mn fetchusers mn error`)
     }
   }
-const freezeUser = async () => {
-    const result = await fetch(`${baseUrl}/freezeUser`, {
+  const freezeUser = async (id) => {
+  // console.log(`userid to freeze: ${id}`)
+    const result = await fetch(`${baseUrl}/freezeUser?userId=${id}`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
