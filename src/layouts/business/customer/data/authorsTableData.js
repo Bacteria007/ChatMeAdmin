@@ -12,6 +12,9 @@ import { Fragment, useEffect, useState } from "react";
 import { Icon } from "@mui/material";
 import { baseUrl } from "context";
 import { formatDate } from "context";
+import { Navigate, useNavigate } from "react-router-dom";
+
+
 
 function Author({ image, name, phone }) {
 
@@ -32,21 +35,10 @@ function Author({ image, name, phone }) {
   );
 }
 
-function Function({ job, org }) {
-  return (
-    <SoftBox display="flex" flexDirection="column">
-      <SoftTypography variant="caption" fontWeight="medium" color="text">
-        {job}
-      </SoftTypography>
-      <SoftTypography variant="caption" color="secondary">
-        {org}
-      </SoftTypography>
-    </SoftBox>
-  );
-}
+
 
 const authorsTableData = () => {
-
+  const navigate = useNavigate()
   const [allUsers, setAllUsers] = useState([])
   const fetchUsers = async () => {
     console.log('jjjjjjjjj')
@@ -66,7 +58,7 @@ const authorsTableData = () => {
     }
   }
   const freezeUser = async (id) => {
-  // console.log(`userid to freeze: ${id}`)
+    // console.log(`userid to freeze: ${id}`)
     const result = await fetch(`${baseUrl}/freezeUser?userId=${id}`, {
       method: 'post',
       headers: {
@@ -86,6 +78,7 @@ const authorsTableData = () => {
     fetchUsers()
   }, [])
   return {
+
     columns: [
       // { name: "User_Name", align: "left" },
       // { name: "PhoneNumber", align: "left" },
@@ -120,7 +113,7 @@ const authorsTableData = () => {
           <Fragment>
             <SoftTypography
               component="a"
-              href="#"
+              // href="#"
               variant="caption"
               color="secondary"
               fontWeight="medium"
@@ -128,15 +121,20 @@ const authorsTableData = () => {
             >
               Freez
             </SoftTypography><br />
+            
             <SoftTypography
               component="a"
-              href="#"
+              // href="#"
               variant="caption"
               color="primary"
               fontWeight="medium"
+            onClick={() => navigate(`/userDetail/${user}`)}
             >
-              View
+              
+                View
             </SoftTypography>
+              
+
             {/* <SoftButton
               // component={Link}
               // to={action.route}
