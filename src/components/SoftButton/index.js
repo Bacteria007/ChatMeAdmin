@@ -60,6 +60,7 @@ SoftButton.propTypes = {
     "error",
     "light",
     "dark",
+    "grey",
   ]),
   circular: PropTypes.bool,
   iconOnly: PropTypes.bool,

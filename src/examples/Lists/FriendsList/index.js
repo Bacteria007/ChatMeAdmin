@@ -53,12 +53,12 @@ function FriendsList({ title, friends }) {
 
   return (
     <Card sx={{ height: "100%" }}>
-      <SoftBox pt={2} px={2}>
+      <SoftBox pt={2} px={4}>
         <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           {title}
         </SoftTypography>
       </SoftBox>
-      <SoftBox p={2}>
+      <SoftBox p={4}>
         <SoftBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
           {renderProfiles}
         </SoftBox>

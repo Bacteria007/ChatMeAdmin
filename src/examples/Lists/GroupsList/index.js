@@ -44,9 +44,9 @@ function Groupslist({ title, groups }) {
         <SoftTypography variant="button" fontWeight="medium">
           {group_name}
         </SoftTypography>
-        <SoftTypography variant="caption" color="text">
+        {/* <SoftTypography variant="caption" color="text">
           {"description"}
-        </SoftTypography>
+        </SoftTypography> */}
       </SoftBox>
      </SoftBox>
   ));

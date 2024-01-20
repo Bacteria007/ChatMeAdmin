@@ -16,7 +16,7 @@ import Table from "examples/Tables/Table";
 import Sidenav from "examples/Sidenav";
 import shopRoutes from "routes/shopRoutes";
 import { appName } from "context";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { baseUrl } from "context";
 import ProfilesList from "examples/Lists/ProfilesList";
@@ -26,11 +26,11 @@ import Groupslist from "examples/Lists/GroupsList";
 
 function ViewUser() {
     const params = useParams();
-    const { id } = params
+    const { id, } = params
     const [userdetails, setUserdetails] = useState({});
     const [friends, setFriends] = useState([])
     const [joinedGroups, setJoinedGroups] = useState([])
-   
+
     const fetchUserDetails = async () => {
         console.log('jjjjjjjjj', id)
         const result = await fetch(`${baseUrl}/singleUserDetail?userId=${id}`, {
@@ -55,11 +55,11 @@ function ViewUser() {
     useEffect(() => {
         fetchUserDetails()
     }, [])
-    
+
     return (
         <DashboardLayout>
-                            <SoftTypography  variant="h5">User Details</SoftTypography>
-                                        <Sidenav
+            <SoftTypography variant="h5">User Details</SoftTypography>
+            <Sidenav
                 color="info"
                 brandName={appName}
                 routes={shopRoutes}
@@ -68,7 +68,7 @@ function ViewUser() {
                 <SoftBox mb={3}>
                     <Card>
                         <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                            <SoftTypography variant="h3">{userdetails && userdetails.name}</SoftTypography>
+                            <SoftTypography variant="h3">{userdetails?userdetails.name:null}</SoftTypography>
                         </SoftBox>
                         <SoftBox
                             sx={{
@@ -80,8 +80,8 @@ function ViewUser() {
                                 },
                             }}
                         >
-                                      <FriendsList title="Friends" friends={friends} />
-                                      <Groupslist title="Groups" groups={joinedGroups}/>
+                            <FriendsList title="Friends" friends={friends} />
+                            <Groupslist title="Groups" groups={joinedGroups} />
 
                         </SoftBox>
                     </Card>
