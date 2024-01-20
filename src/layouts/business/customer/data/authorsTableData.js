@@ -112,7 +112,7 @@ const authorsTableData = () => {
         action: (
           <Fragment>
             <SoftTypography
-              component="a"
+              // component="a"
               // href="#"
               variant="caption"
               color="secondary"
@@ -123,10 +123,10 @@ const authorsTableData = () => {
             </SoftTypography><br />
             
             <SoftTypography
-              component="a"
+              // component="a"
               // href="#"
               variant="caption"
-              color="primary"
+              color="secondary"
               fontWeight="medium"
             onClick={() => navigate(`/userDetail/${user._id}`)}
             >
