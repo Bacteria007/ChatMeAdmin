@@ -67,6 +67,8 @@ function SignUp() {
           console.log("signup", res)
           await localStorage.setItem('isAdminLoggedIn', JSON.stringify(true))
           await localStorage.setItem('adminId', res._id)
+          await localStorage.setItem('name', res.name)
+          await localStorage.setItem('profile', res.profileImage)
           await localStorage.setItem('email', res.email)
           navigate('/dashboard');
         }

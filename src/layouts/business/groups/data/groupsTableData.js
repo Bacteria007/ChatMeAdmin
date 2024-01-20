@@ -39,10 +39,10 @@ function Author({ image, name, phone }) {
 
 const authorsTableData = () => {
   const navigate = useNavigate()
-  const [allUsers, setAllUsers] = useState([])
+  const [allGroups, setAllGroups] = useState([])
   const fetchUsers = async () => {
     console.log('jjjjjjjjj')
-    const result = await fetch(`${baseUrl}/allUsers`, {
+    const result = await fetch(`${baseUrl}/viewAllAvailableGroups`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -111,36 +111,48 @@ const authorsTableData = () => {
         ),
         action: (
           <Fragment>
-            <SoftButton
+            <SoftTypography
+              // component="a"
+              // href="#"
+              variant="caption"
+              color="secondary"
+              fontWeight="medium"
+              onClick={() => freezeUser(user._id)}
+            >
+              Freez
+            </SoftTypography><br />
+            <Link to={`/userDetail/${user._id}`}>
+              <SoftTypography
+                // component="a"
+                // href="#"
+                variant="caption"
+                color="secondary"
+                fontWeight="medium"
+              // onClick={() => navigate()}
+              >
+
+                View
+              </SoftTypography>
+            </Link>
+
+            {/* <SoftButton
+              // component={Link}
+              // to={action.route}
               variant="gradient"
               color={"success"}
-              size={"small"}
-              text
-            >
-              <SoftTypography
-                variant="caption"
-                color="white"
-                fontWeight="large"
-                
-                onClick={() => freezeUser(user._id)}
-              >
-                Freez
-              </SoftTypography><br /> {/* <Icon sx={{ fontWeight: "bold" }}>edit</Icon> */}
+              small
+              iconOnly
+            ><Icon sx={{ fontWeight: "bold" }}>edit</Icon>
             </SoftButton> &nbsp;
             <SoftButton
+              // component={Link}
+              // to={action.route}
               variant="gradient"
-              color={"info"}
-              size={"small"}
-              
-              text
-            >
-              <SoftTypography
-                variant="caption"
-                color="white"
-                fontWeight="large"
-              onClick={() => navigate(`/userDetail/${user._id}`)}
-              > View  </SoftTypography>
-            </SoftButton>
+              color={"error"}
+              small
+              iconOnly
+            ><Icon sx={{ fontWeight: "bold" }}>delete</Icon>
+            </SoftButton> */}
           </Fragment>
         ),
       }

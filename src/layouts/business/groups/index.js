@@ -12,16 +12,15 @@ import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
 
 // Data
-import authorsTableData from "./data/authorsTableData";
+import groupsTableData from "./data/groupsTableData";
 import Sidenav from "examples/Sidenav";
 import shopRoutes from "routes/shopRoutes";
 import { useState } from "react";
 import { useEffect } from "react";
 import { appName } from "context";
-// import projectsTableData from "./data/projectsTableData";
 
-function User() {
-  const { columns, rows } = authorsTableData()
+function Groups() {
+  const { columns, rows } = groupsTableData()
   console.log("@@@@@@@@@@@@@@",rows)
 
   // const { columns: prCols, rows: prRows } = projectsTableData;
@@ -37,7 +36,7 @@ function User() {
         <SoftBox mb={3}>
           <Card>
             <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SoftTypography variant="h6">Total Users {rows.length}</SoftTypography>
+              <SoftTypography variant="h6">Users List</SoftTypography>
             </SoftBox>
             <SoftBox
               sx={{
@@ -59,4 +58,4 @@ function User() {
   );
 }
 
-export default User;
+export default Groups;

@@ -41,6 +41,8 @@ import breakpoints from "assets/theme/base/breakpoints";
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
 import curved0 from "assets/images/curved-images/curved0.jpg";
+import { Logout } from "@mui/icons-material";
+import { baseUrl } from "context";
 
 function Header() {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
@@ -103,7 +105,7 @@ function Header() {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <SoftAvatar
-              src={burceMars}
+              src={`${baseUrl}${localStorage.getItem("profile")}`}
               alt="profile-image"
               variant="rounded"
               size="xl"
@@ -113,10 +115,10 @@ function Header() {
           <Grid item>
             <SoftBox height="100%" mt={0.5} lineHeight={1}>
               <SoftTypography variant="h5" fontWeight="medium">
-                Alex Thompson
+               {localStorage.getItem("name")}
               </SoftTypography>
               <SoftTypography variant="button" color="text" fontWeight="medium">
-                CEO / Co-Founder
+                {localStorage.getItem("email")}
               </SoftTypography>
             </SoftBox>
           </Grid>
@@ -128,9 +130,8 @@ function Header() {
                 onChange={handleSetTabValue}
                 sx={{ background: "transparent" }}
               >
-                <Tab label="App" icon={<Cube />} />
-                <Tab label="Message" icon={<Document />} />
-                <Tab label="Settings" icon={<Settings />} />
+                <Tab label="logout" icon={<Logout />} />
+                
               </Tabs>
             </AppBar>
           </Grid>

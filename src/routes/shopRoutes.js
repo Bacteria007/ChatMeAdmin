@@ -1,10 +1,12 @@
 // Soft UI Dashboard React icons
+import { Group } from "@mui/icons-material";
 import Shop from "examples/Icons/Shop";
 import BusinessMenu from "layouts/business/BusinessMenu";
 import Cashback from "layouts/business/Cashback";
 import SignIn from "layouts/business/authentication/sign-in";
-import Customer from "layouts/business/customer";
+import User from "layouts/business/customer";
 import Earning from "layouts/business/earning";
+import Groups from "layouts/business/groups";
 import SubAdmin from "layouts/business/subadmin";
 import { FaList,FaWallet,FaUser,FaFirstOrder,FaQrcode,FaCalendar,FaMoneyBill,FaEdit } from 'react-icons/fa';
 
@@ -26,18 +28,18 @@ const shopRoutes = [
     key: "users",
     route: "/users",
     icon: <FaUser size="14px" />,
-    component: <Customer />,
+    component: <User />,
     noCollapse: true,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Earnings",
-  //   key: "earning",
-  //   route: "/Earnings",
-  //   icon: <FaWallet size="14px" />,
-  //   component: <Earning />,
-  //   noCollapse: true,
-  // },
+  {
+    type: "collapse",
+    name: "Groups",
+    key: "groups",
+    route: "/Groups",
+    icon: <Group size="14px" />,
+    component: <Groups />,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Profile",
