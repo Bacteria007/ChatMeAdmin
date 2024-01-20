@@ -19,12 +19,18 @@ import { appName } from "context";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { baseUrl } from "context";
+import ProfilesList from "examples/Lists/ProfilesList";
+import FriendsList from "examples/Lists/FriendsList";
+import Groupslist from "examples/Lists/GroupsList";
 // import projectsTableData from "./data/projectsTableData";
 
 function ViewUser() {
     const params = useParams();
     const { id } = params
-    const [userdetails, setUserdetails] = useState([]);
+    const [userdetails, setUserdetails] = useState({});
+    const [friends, setFriends] = useState([])
+    const [joinedGroups, setJoinedGroups] = useState([])
+   
     const fetchUserDetails = async () => {
         console.log('jjjjjjjjj', id)
         const result = await fetch(`${baseUrl}/singleUserDetail?userId=${id}`, {
@@ -35,7 +41,10 @@ function ViewUser() {
         if (result.ok) {
             const userDetailsObj = await result.json()
             console.log('alluser*********', userDetailsObj)
-            setUserdetails(userDetailsObj.user)
+            setUserdetails(userDetailsObj.user.user)
+            setJoinedGroups(userDetailsObj.user.groups)
+            setFriends(userDetailsObj.user.friends)
+
             // console.log('alluser*********')
 
         }
@@ -46,10 +55,11 @@ function ViewUser() {
     useEffect(() => {
         fetchUserDetails()
     }, [])
+    
     return (
         <DashboardLayout>
-            <DashboardNavbar />
-            <Sidenav
+                            <SoftTypography  variant="h5">User Details</SoftTypography>
+                                        <Sidenav
                 color="info"
                 brandName={appName}
                 routes={shopRoutes}
@@ -58,8 +68,7 @@ function ViewUser() {
                 <SoftBox mb={3}>
                     <Card>
                         <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                            <SoftTypography variant="h6">User</SoftTypography>
-                            {/* <SoftTypography variant="h6">{userdetails? userdetails.user.user.name: "user"}</SoftTypography> */}
+                            <SoftTypography variant="h3">{userdetails && userdetails.name}</SoftTypography>
                         </SoftBox>
                         <SoftBox
                             sx={{
@@ -71,14 +80,9 @@ function ViewUser() {
                                 },
                             }}
                         >
-                            {/* <Table columns={[]} rows={[{ name: "user", align: "left" },{ name: "Friends", align: "left" },{ name: "Groups", align: "left" }]} /> */}
-                            {
-                                userdetails.map((user)=>{
-                                    return (
-                                        <h1>{user.friends}</h1>
-                                    )
-                                })
-                            }
+                                      <FriendsList title="Friends" friends={friends} />
+                                      <Groupslist title="Groups" groups={joinedGroups}/>
+
                         </SoftBox>
                     </Card>
                 </SoftBox>
