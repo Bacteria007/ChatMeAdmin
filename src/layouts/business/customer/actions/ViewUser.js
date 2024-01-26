@@ -22,6 +22,8 @@ import { baseUrl } from "context";
 import ProfilesList from "examples/Lists/ProfilesList";
 import FriendsList from "examples/Lists/FriendsList";
 import Groupslist from "examples/Lists/GroupsList";
+import SoftAvatar from "components/SoftAvatar";
+import SoftBadge from "components/SoftBadge";
 // import projectsTableData from "./data/projectsTableData";
 
 function ViewUser() {
@@ -67,9 +69,28 @@ function ViewUser() {
             <SoftBox py={3}>
                 <SoftBox mb={3}>
                     <Card>
-                        <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                            <SoftTypography variant="h3">{userdetails?userdetails.name:null}</SoftTypography>
+                            <SoftBox display="flex" alignItems="center" px={1} py={0.5}  justifyContent="space-between">
+                            
+                        <SoftBox display="flex" flexDirection="column" p={3}>
+                            <SoftBox mr={2}>
+                                <SoftAvatar src={`${baseUrl}${userdetails.profileImage}`} alt={'profileImage'} size="sm" variant="rounded" />
+                            </SoftBox>
+                            <SoftTypography variant="h3" fontWeight="medium">
+                                {userdetails ? userdetails.name : null}
+                            </SoftTypography>
+                            <SoftTypography variant="caption" color="secondary">
+                                {userdetails ? userdetails.phoneNo : null}
+                            </SoftTypography>
+                            <SoftBadge variant="gradient" badgeContent={userdetails.isActive === true ? "active" : "inActive"} color="success" size="xs" container  />
                         </SoftBox>
+                        <SoftBox display="flex" flexDirection="column" p={3}>
+                        <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+                                Friends : {friends ? friends.length : null}
+                            </SoftTypography><SoftTypography variant="caption" color="secondary" fontWeight="medium">
+                            Groups : {joinedGroups ? joinedGroups.length : null}
+                            </SoftTypography>
+</SoftBox>
+    </SoftBox>
                         <SoftBox
                             sx={{
                                 "& .MuiTableRow-root:not(:last-child)": {

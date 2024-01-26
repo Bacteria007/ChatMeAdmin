@@ -27,9 +27,9 @@ function Author({ image, name, phone }) {
         <SoftTypography variant="button" fontWeight="medium">
           {name}
         </SoftTypography>
-        <SoftTypography variant="caption" color="secondary">
+        {/* <SoftTypography variant="caption" color="secondary">
           {phone}
-        </SoftTypography>
+        </SoftTypography> */}
       </SoftBox>
     </SoftBox>
   );
@@ -37,24 +37,24 @@ function Author({ image, name, phone }) {
 
 
 
-const authorsTableData = () => {
+const groupsTableData = () => {
   const navigate = useNavigate()
   const [allGroups, setAllGroups] = useState([])
-  const fetchUsers = async () => {
-    console.log('jjjjjjjjj')
-    const result = await fetch(`${baseUrl}/viewAllAvailableGroups`, {
-      method: 'GET',
+  
+  const fetchGroups = async () => {
+    const result = await fetch(`${baseUrl}/allAvailableGroups`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     })
 
     if (result.ok) {
-      const fetchedUsersList = await result.json()
-      console.log('alluser*********', fetchedUsersList)
-      setAllUsers(fetchedUsersList)
-      console.log('alluser&&&&&', allUsers)
+      const fetchedGroups = await result.json()
+      console.log('allGroups*********', fetchedGroups)
+      setAllGroups(fetchedGroups)
+
     }
     else {
-      console.log(`authorsTable mn fetchusers mn error`)
+      console.log(`groupTable mn fetchedGroups mn error`)
     }
   }
   const freezeUser = async (id) => {
@@ -75,7 +75,7 @@ const authorsTableData = () => {
     }
   }
   useEffect(() => {
-    fetchUsers()
+    fetchGroups()
   }, [])
   return {
 
@@ -84,13 +84,13 @@ const authorsTableData = () => {
       // { name: "PhoneNumber", align: "left" },
       // { name: "Profile_Image", align: "left" },
       // { name: "function", align: "left" },
-      { name: "user", align: "left" },
-      { name: "status", align: "center" },
+      { name: "group_name", align: "left" },
       { name: "registered", align: "center" },
+      { name: "group_members", align: "center" },
       { name: "action", align: "center" },
     ],
 
-    rows: allUsers.map((user) => (
+    rows: allGroups.map((group) => (
       {
         // User_Name: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
         // {user.name}
@@ -99,60 +99,31 @@ const authorsTableData = () => {
         //   {user.phoneNo}
         // </SoftTypography>,
         // Profile_Image: <Author image={`${baseUrl}${user.profileImage}`} />,
-        user: <Author image={`${baseUrl}${user.profileImage}`} name={user.name} phone={user.phoneNo} />,
+        group_name: <Author image={`${baseUrl}${group.group_dp}`} name={group.group_name} />,
         // function: <Function job="Manager" org="Organization" />,
-        status: (
-          <SoftBadge variant="gradient" badgeContent={user.isActive == true ? "active" : "not active"} color="success" size="xs" container />
+        group_members: (
+          <SoftTypography variant="caption" color="secondary" fontWeight="medium" >{group.members.length}</SoftTypography>
         ),
         registered: (
           <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-            {formatDate(user.createdAt)}
+            {formatDate(group.createdAt)}
           </SoftTypography>
         ),
         action: (
           <Fragment>
-            <SoftTypography
-              // component="a"
-              // href="#"
-              variant="caption"
-              color="secondary"
-              fontWeight="medium"
-              onClick={() => freezeUser(user._id)}
-            >
-              Freez
-            </SoftTypography><br />
-            <Link to={`/userDetail/${user._id}`}>
-              <SoftTypography
-                // component="a"
-                // href="#"
-                variant="caption"
-                color="secondary"
-                fontWeight="medium"
-              // onClick={() => navigate()}
-              >
-
-                View
-              </SoftTypography>
-            </Link>
-
-            {/* <SoftButton
-              // component={Link}
-              // to={action.route}
-              variant="gradient"
-              color={"success"}
-              small
-              iconOnly
-            ><Icon sx={{ fontWeight: "bold" }}>edit</Icon>
-            </SoftButton> &nbsp;
             <SoftButton
-              // component={Link}
-              // to={action.route}
               variant="gradient"
-              color={"error"}
-              small
-              iconOnly
-            ><Icon sx={{ fontWeight: "bold" }}>delete</Icon>
-            </SoftButton> */}
+              color={"info"}
+              size={"small"}
+              text
+            >
+              <SoftTypography
+                variant="caption"
+                color="white"
+                fontWeight="large"
+                onClick={() => navigate(`/groupDetail/${group._id}`)}
+              > View  </SoftTypography>
+            </SoftButton>
           </Fragment>
         ),
       }
@@ -162,4 +133,4 @@ const authorsTableData = () => {
 
 };
 
-export default authorsTableData;
+export default groupsTableData;

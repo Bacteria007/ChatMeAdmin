@@ -21,7 +21,7 @@ import { appName } from "context";
 
 function Groups() {
   const { columns, rows } = groupsTableData()
-  console.log("@@@@@@@@@@@@@@",rows)
+  console.log("groups index js-----------------",rows)
 
   // const { columns: prCols, rows: prRows } = projectsTableData;
   return (
@@ -36,7 +36,7 @@ function Groups() {
         <SoftBox mb={3}>
           <Card>
             <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SoftTypography variant="h6">Users List</SoftTypography>
+              <SoftTypography variant="h6">Total Available Groups : {rows.length}</SoftTypography>
             </SoftBox>
             <SoftBox
               sx={{

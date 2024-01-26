@@ -30,8 +30,8 @@ import SoftButton from "components/SoftButton";
 import { baseUrl } from "context";
 import SoftBadge from "components/SoftBadge";
 
-function FriendsList({ title, friends }) {
-  const renderProfiles = friends.map(({_id, profileImage, name, phoneNo,isActive }) => (
+function MemberList({ title, Member }) {
+  const renderProfiles = Member.map(({_id, profileImage, name, phoneNo,isActive }) => (
     <SoftBox key={_id}  display="flex" alignItems="center" justifyContent="space-between" px={1} py={0.5} >
     <SoftBox  component="li" display="flex" alignItems="center" py={1} mb={1}>
       <SoftBox mr={2}>
@@ -71,10 +71,10 @@ function FriendsList({ title, friends }) {
   );
 }
 
-// Typechecking props for the FriendsList
-FriendsList.propTypes = {
+// Typechecking props for the MemberList
+MemberList.propTypes = {
   title: PropTypes.string.isRequired,
-  friends: PropTypes.arrayOf(PropTypes.object).isRequired,
+  Member: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default FriendsList;
+export default MemberList;
