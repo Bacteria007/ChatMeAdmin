@@ -38,6 +38,9 @@ import curved6 from "assets/images/curved-images/curved14.jpg";
 import { baseUrl } from "context";
 import axios from "axios";
 
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+
 function SignUp() {
 
   const [name, setName] = useState('');
@@ -85,15 +88,30 @@ function SignUp() {
         console.log(response);
       });
   }
-
+  const signupSchema = Yup.object({
+    name: Yup.string().min(6, 'Too Short!').max(50, 'Too Long!').required('Please enter your full name.'),
+    email: Yup.string().email('Invalid email').required('Please enter your email address.'),
+    password: Yup.string().min(8, 'Too Short!').required('Please enter your password.').matches(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      'Must contain minimum 8 characters, at least one uppercase letter ,one lowercase letter ,one number and one special character.'
+    ),
+  })
   return (
-    <BasicLayout
-      title="Welcome!"
-      // description="Use these awesome forms to login or create new account in your project for free."
-      image={curved6}
+    <Formik initialValues={{
+      name: '',
+      email: '',
+      password: ''
+    }}
+      validationSchema={signupSchema}
     >
-      <Card>
-        {/* <SoftBox p={3} mb={1} textAlign="center">
+      {({ values, error, touched, handleChange, setFieldTouched, isValid, handleSubmit }) => (
+        <BasicLayout
+          title="Welcome!"
+          // description="Use these awesome forms to login or create new account in your project for free."
+          image={curved6}
+        >
+          <Card>
+            {/* <SoftBox p={3} mb={1} textAlign="center">
           <SoftTypography variant="h5" fontWeight="medium">
             Register with
           </SoftTypography>
@@ -101,43 +119,72 @@ function SignUp() {
         <SoftBox mb={2}>
           <Socials />
         </SoftBox> */}
-        {/* <Separator /> */}
-        <SoftBox pt={2} pb={3} px={3}>
-          <SoftBox component="form" role="form">
-            <SoftBox mb={2}>
-              <SoftInput placeholder="Name" onChange={(e) => setName(e.target.value)} />
-            </SoftBox>
-            <SoftBox mb={2}>
-              <SoftInput type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-            </SoftBox>
-            <SoftBox mb={2}>
-              <SoftInput type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-            </SoftBox>
+            {/* <Separator /> */}
+            <SoftBox pt={2} pb={3} px={3}>
+              <SoftBox component="form" role="form">
+                <SoftBox mb={2}>
+                  <SoftInput placeholder="Name" onChange={(e) => {
+                    handleChange('name')
+                    setName(e.target.value)
+                  }} values={values.name} 
+                  onBlur={() => setFieldTouched('name')}
+                  />
+                  {touched.name &&error.name && (
+                    <SoftTypography variant="button" color="text" fontWeight="regular">
+                      {error.name}</SoftTypography>
+                  )}
+                </SoftBox>
+                <SoftBox mb={2}>
+                  <SoftInput type="email" placeholder="Email" onChange={(e) => {
+                    handleChange('email')
+                    setEmail(e.target.value)
+                  }} values={values.email}
+                    onBlur={() => setFieldTouched('email')}
+                  />
+                  {touched.email &&error.email && (
+                    <SoftTypography variant="button" color="text" fontWeight="regular">
+                      {error.email}</SoftTypography>
+                  )}
+                </SoftBox>
+                <SoftBox mb={2}>
+                  <SoftInput type="password" placeholder="Password" onChange={(e) => {
+                    handleChange('password')
+                    setPassword(e.target.value)
+                  }} values={values.password} 
+                  onBlur={() => setFieldTouched('password')}
+                  />
+                  {touched.password &&error.password && (
+                    <SoftTypography variant="button" color="text" fontWeight="regular">
+                      {error.password}</SoftTypography>
+                  )}
+                </SoftBox>
 
-            <SoftBox mt={4} mb={1}>
-              <SoftButton variant="gradient" color="dark" fullWidth onClick={() => signup()}>
-                sign up
-              </SoftButton>
+                <SoftBox mt={4} mb={1}>
+                  <SoftButton variant="gradient" color="dark" fullWidth onClick={() => signup()}>
+                    sign up
+                  </SoftButton>
+                </SoftBox>
+                <SoftBox mt={3} textAlign="center">
+                  <SoftTypography variant="button" color="text" fontWeight="regular">
+                    Already have an account?&nbsp;
+                    <SoftTypography
+                      component={Link}
+                      to="/"
+                      variant="button"
+                      color="dark"
+                      fontWeight="bold"
+                      textGradient
+                    >
+                      Sign in
+                    </SoftTypography>
+                  </SoftTypography>
+                </SoftBox>
+              </SoftBox>
             </SoftBox>
-            <SoftBox mt={3} textAlign="center">
-              <SoftTypography variant="button" color="text" fontWeight="regular">
-                Already have an account?&nbsp;
-                <SoftTypography
-                  component={Link}
-                  to="/"
-                  variant="button"
-                  color="dark"
-                  fontWeight="bold"
-                  textGradient
-                >
-                  Sign in
-                </SoftTypography>
-              </SoftTypography>
-            </SoftBox>
-          </SoftBox>
-        </SoftBox>
-      </Card>
-    </BasicLayout>
+          </Card>
+        </BasicLayout>
+      )}
+    </Formik>
   );
 }
 

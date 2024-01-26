@@ -16,45 +16,43 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 
 
 
-export function Author({ image, name, phone }) {
-
+export function Author({ name }) {
+  // console.log('llllllllll',name)
   return (
-    <SoftBox display="flex" alignItems="center" px={1} py={0.5}>
-      <SoftBox mr={2}>
+    <SoftBox display="flex" alignItems="center" px={1} py={0.5}ml={2}>
+      {/* <SoftBox mr={2}>
         <SoftAvatar src={image} alt={name} size="sm" variant="rounded" />
-      </SoftBox>
-      <SoftBox display="flex" flexDirection="column">
+      </SoftBox> */}
         <SoftTypography variant="button" fontWeight="medium">
           {name}
         </SoftTypography>
-        <SoftTypography variant="caption" color="secondary">
+        {/* <SoftTypography variant="caption" color="secondary">
           {phone}
-        </SoftTypography>
-      </SoftBox>
+        </SoftTypography> */}
     </SoftBox>
   );
 }
 
 
 
-const authorsTableData = () => {
+const helpTableData = () => {
   const navigate = useNavigate()
-  const [allUsers, setAllUsers] = useState([])
-  const fetchUsers = async () => {
+  const [allHelpReq, setallHelpReq] = useState([])
+
+  const fetchHelpRequests = async () => {
     console.log('jjjjjjjjj')
-    const result = await fetch(`${baseUrl}/allUsers`, {
-      method: 'GET',
+    const result = await fetch(`${baseUrl}/allHelpRequests`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     })
 
     if (result.ok) {
       const fetchedUsersList = await result.json()
-      console.log('alluser*********', fetchedUsersList)
-      setAllUsers(fetchedUsersList)
-      console.log('alluser&&&&&', allUsers)
+      console.log('alluser*********', fetchedUsersList.res)
+      setallHelpReq(fetchedUsersList.res)
     }
     else {
-      console.log(`authorsTable mn fetchusers mn error`)
+      console.log(`helpTable mn fetchHelpRequests mn error`)
     }
   }
   const freezeUser = async (id) => {
@@ -75,18 +73,19 @@ const authorsTableData = () => {
     }
   }
   useEffect(() => {
-    fetchUsers()
+    fetchHelpRequests()
   }, [])
   return {
 
     columns: [
-      { name: "user", align: "left" },
+      { name: "sender_name", align: "left" },
+      { name: "issue", align: "left" },
       { name: "status", align: "center" },
-      { name: "registered", align: "center" },
       { name: "action", align: "center" },
     ],
 
-    rows: allUsers.map((user) => (
+    rows: allHelpReq.map((user) => (
+      
       {
         // User_Name: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
         // {user.name}
@@ -95,50 +94,32 @@ const authorsTableData = () => {
         //   {user.phoneNo}
         // </SoftTypography>,
         // Profile_Image: <Author image={`${baseUrl}${user.profileImage}`} />,
-        user: <Author image={`${baseUrl}${user.profileImage}`} name={user.name} phone={user.phoneNo} />,
+        sender_name: <Author name={user.senderName}  />,
         // function: <Function job="Manager" org="Organization" />,
-        status: (
-          <SoftBadge variant="gradient" badgeContent={user.isActive == true ? "active" : "inActive"} color="success" size="xs" container />
-        ),
-        registered: (
+        issue: (
           <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-            {formatDate(user.createdAt)}
+            {user.message}
           </SoftTypography>
         ),
-        action: (
-          <Fragment>
-            <SoftButton
-              variant="gradient"
-              color={"success"}
-              size={"small"}
-              text
-            >
-              <SoftTypography
-                variant="caption"
-                color="white"
-                fontWeight="large"
-                
-                onClick={() => freezeUser(user._id)}
-              >
-                Freez
-              </SoftTypography><br /> {/* <Icon sx={{ fontWeight: "bold" }}>edit</Icon> */}
-            </SoftButton> &nbsp;
-            <SoftButton
-              variant="gradient"
-              color={"info"}
-              size={"small"}
-              
-              text
-            >
-              <SoftTypography
-                variant="caption"
-                color="white"
-                fontWeight="large"
-              onClick={() => navigate(`/userDetail/${user._id}`)}
-              > View  </SoftTypography>
-            </SoftButton>
-          </Fragment>
+        status: (
+          <SoftBadge variant="gradient" badgeContent={user.status} color="success" size="xs" container />
         ),
+        action: (
+          <SoftButton
+          variant="gradient"
+          color={"info"}
+          size={"small"}
+          
+          text
+        >
+          <SoftTypography
+            variant="caption"
+            color="white"
+            fontWeight="large"
+          onClick={() => navigate(`/helpMsgDetail/${user._id}`)}
+          > View  </SoftTypography>
+        </SoftButton>
+    ),
       }
     ))
 
@@ -146,4 +127,4 @@ const authorsTableData = () => {
 
 };
 
-export default authorsTableData;
+export default helpTableData;

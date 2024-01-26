@@ -5,6 +5,7 @@ import BusinessMenu from "layouts/business/BusinessMenu";
 import Cashback from "layouts/business/Cashback";
 import SignIn from "layouts/business/authentication/sign-in";
 import User from "layouts/business/customer";
+import UserHelp from "layouts/business/customer/userHelp";
 import Earning from "layouts/business/earning";
 import Groups from "layouts/business/groups";
 import SubAdmin from "layouts/business/subadmin";
@@ -13,15 +14,15 @@ import { FaList,FaWallet,FaUser,FaFirstOrder,FaQrcode,FaCalendar,FaMoneyBill,FaE
 const shopRoutes = [
   
   { type: "title", title: "User Management", key: "resmgt" },
-  // {
-  //   type: "collapse",
-  //   name: "Sub admins",
-  //   key: "subadmins",
-  //   route: "/subAdmins",
-  //   icon: <FaUser size="14px" />,
-  //   component: <SubAdmin />,
-  //   noCollapse: true,
-  // },
+  {
+    type: "collapse",
+    name: "help center",
+    key: "help center",
+    route: "/helpCenter",
+    icon: <FaUser size="14px" />,
+    component: <UserHelp />,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Users",

@@ -5,7 +5,19 @@ import Profile from "layouts/business/profile";
 import Shop from "examples/Icons/Shop";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import ViewUser from "layouts/business/customer/actions/ViewUser";
+import ViewGroup from "layouts/business/groups/actions/ViewGroup";
+import memberTableData from "layouts/business/groups/memberData/memberTableData";
+import ViewDetail from "layouts/business/customer/userHelp/actions/ViewDetail";
 const routes = [
+  {
+    type: "collapse",
+    name: "helpMsgDetail",
+    key: "helpMsgDetail",
+    route: "/helpMsgDetail/:id",
+    icon: <Shop size="12px" />,
+    component: <ViewDetail />,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "UserDetails",
@@ -15,6 +27,24 @@ const routes = [
     component: <ViewUser />,
     noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "GroupDetails",
+    key: "groupdetails",
+    route: "/groupDetail/:id",
+    icon: <Shop size="12px" />,
+    component: <ViewGroup />,
+    noCollapse: true,
+  },
+  // {
+  //   type: "collapse",
+  //   name: "GroupDetails",
+  //   key: "groupdetails",
+  //   route: "/groupDetail/:id",
+  //   icon: <Shop size="12px" />,
+  //   component: <memberTableData />,
+  //   noCollapse: true,
+  // },
   {
     type: "collapse",
     name: "Dashboard",
