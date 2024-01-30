@@ -24,6 +24,7 @@ import FriendsList from "examples/Lists/FriendsList";
 import Groupslist from "examples/Lists/GroupsList";
 import SoftAvatar from "components/SoftAvatar";
 import SoftBadge from "components/SoftBadge";
+import SoftButton from "components/SoftButton";
 // import projectsTableData from "./data/projectsTableData";
 
 function ViewDetail() {
@@ -66,14 +67,27 @@ function ViewDetail() {
                         <SoftBox display="flex" alignItems="center" px={1} py={0.5} justifyContent="space-between">
 
                             <SoftBox display="flex" flexDirection="column" p={3}>
-                                
+
                                 <SoftTypography variant="h3" fontWeight="medium">
                                     {details ? details.senderName : null}
                                 </SoftTypography>
                                 <SoftTypography variant="caption" color="secondary">
                                     {details ? details.message : null}
                                 </SoftTypography>
-                                <SoftBadge variant="gradient" badgeContent={details.status} color="success" size="xs" container />
+                                <SoftButton
+                                    variant="gradient"
+                                    color={"info"}
+                                    size={"small"}
+
+                                    text
+                                >
+                                    <SoftTypography
+                                        variant="caption"
+                                        color="white"
+                                        fontWeight="large"
+                                        onClick={() => navigate(`/helpMsgDetail/${user._id}`)}
+                                    > View  </SoftTypography>
+                                </SoftButton>
                             </SoftBox>
                         </SoftBox>
                     </Card>
