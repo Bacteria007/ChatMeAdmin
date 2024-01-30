@@ -97,19 +97,26 @@ function SignUp() {
     ),
   })
   return (
-    <Formik initialValues={{
-      name: '',
-      email: '',
-      password: ''
-    }}
-      validationSchema={signupSchema}
+    <Formik
+  initialValues={{
+    name: '',
+    email: '',
+    password: ''
+  }}
+  validationSchema={signupSchema}
+  onSubmit={(values, { setSubmitting }) => {
+    setName(values.name);
+    setEmail(values.email);
+    setPassword(values.password);
+    signup();
+    setSubmitting(false);
+  }}
+>
+{({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit }) => (
+    <BasicLayout
+      title="Welcome!"
+      image={curved6}
     >
-      {({ values, error, touched, handleChange, setFieldTouched, isValid, handleSubmit }) => (
-        <BasicLayout
-          title="Welcome!"
-          // description="Use these awesome forms to login or create new account in your project for free."
-          image={curved6}
-        >
           <Card>
             {/* <SoftBox p={3} mb={1} textAlign="center">
           <SoftTypography variant="h5" fontWeight="medium">
@@ -123,47 +130,56 @@ function SignUp() {
             <SoftBox pt={2} pb={3} px={3}>
               <SoftBox component="form" role="form">
                 <SoftBox mb={2}>
-                  <SoftInput placeholder="Name" onChange={(e) => {
-                    handleChange('name')
-                    setName(e.target.value)
-                  }} values={values.name} 
-                  onBlur={() => setFieldTouched('name')}
-                  />
-                  {touched.name &&error.name && (
-                    <SoftTypography variant="button" color="text" fontWeight="regular">
-                      {error.name}</SoftTypography>
-                  )}
+                <SoftInput
+                placeholder="Name"
+                type="text"
+                name="name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
+              />
+              {touched.name && errors.name && (
+                <SoftTypography variant="button" color="text" fontWeight="regular">
+                  {errors.name}
+                </SoftTypography>
+              )}
                 </SoftBox>
                 <SoftBox mb={2}>
-                  <SoftInput type="email" placeholder="Email" onChange={(e) => {
-                    handleChange('email')
-                    setEmail(e.target.value)
-                  }} values={values.email}
-                    onBlur={() => setFieldTouched('email')}
-                  />
-                  {touched.email &&error.email && (
-                    <SoftTypography variant="button" color="text" fontWeight="regular">
-                      {error.email}</SoftTypography>
-                  )}
+                <SoftInput
+                type="email"
+                placeholder="Email"
+                name="email"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+              />
+              {touched.email && errors.email && (
+                <SoftTypography variant="button" color="text" fontWeight="regular">
+                  {errors.email}
+                </SoftTypography>
+              )}
                 </SoftBox>
                 <SoftBox mb={2}>
-                  <SoftInput type="password" placeholder="Password" onChange={(e) => {
-                    handleChange('password')
-                    setPassword(e.target.value)
-                  }} values={values.password} 
-                  onBlur={() => setFieldTouched('password')}
-                  />
-                  {touched.password &&error.password && (
-                    <SoftTypography variant="button" color="text" fontWeight="regular">
-                      {error.password}</SoftTypography>
-                  )}
+                <SoftInput
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              {touched.password && errors.password && (
+                <SoftTypography variant="button" color="text" fontWeight="regular">
+                  {errors.password}
+                </SoftTypography>
+              )}
                 </SoftBox>
 
                 <SoftBox mt={4} mb={1}>
-                  <SoftButton variant="gradient" color="dark" fullWidth onClick={() => signup()}>
-                    sign up
-                  </SoftButton>
-                </SoftBox>
+              <SoftButton variant="gradient" color="dark" fullWidth onClick={handleSubmit}>
+                sign up
+              </SoftButton>
+            </SoftBox>
                 <SoftBox mt={3} textAlign="center">
                   <SoftTypography variant="button" color="text" fontWeight="regular">
                     Already have an account?&nbsp;
