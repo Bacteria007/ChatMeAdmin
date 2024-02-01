@@ -28,42 +28,39 @@ import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 import SoftButton from "components/SoftButton";
 import { baseUrl } from "context";
+import { Grid } from "@mui/material";
+import ListTitle from "../ListTitle";
 
 function Groupslist({ title, groups }) {
-  const renderProfiles = groups.map(({ _id,group_dp, group_name}) => (
-    <SoftBox key={_id} component="li" display="flex" alignItems="center" py={1} mb={1}>
-      <SoftBox mr={2}>
-        <SoftAvatar src={`${baseUrl}${group_dp}`} alt="something here" variant="rounded" shadow="md" />
-      </SoftBox>
-      <SoftBox
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-start"
-        justifyContent="center"
-      >
-        <SoftTypography variant="button" fontWeight="medium">
-          {group_name}
-        </SoftTypography>
-        {/* <SoftTypography variant="caption" color="text">
+  const renderProfiles = groups.map(({ _id, group_dp, group_name }) => (
+    <Grid key={_id} item xs={12} sm={6} md={4}>
+      <SoftBox component="li" display="flex" alignItems="center" py={1} mb={1}>
+        <SoftBox mr={2}>
+          <SoftAvatar src={`${baseUrl}${group_dp}`} alt="something here" variant="rounded" shadow="md" />
+        </SoftBox>
+        <SoftBox
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-start"
+          justifyContent="center"
+        >
+          <SoftTypography variant="button" fontWeight="medium">
+            {group_name}
+          </SoftTypography>
+          {/* <SoftTypography variant="caption" color="text">
           {"description"}
         </SoftTypography> */}
+        </SoftBox>
       </SoftBox>
-     </SoftBox>
+    </Grid>
   ));
 
   return (
-    <Card sx={{ height: "100%" }}>
-      <SoftBox pt={2} px={4}>
-        <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          {title}
-        </SoftTypography>
-      </SoftBox>
       <SoftBox p={4}>
-        <SoftBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+        <Grid container spacing={1} marginX={10}>
           {renderProfiles}
-        </SoftBox>
+        </Grid>
       </SoftBox>
-    </Card>
   );
 }
 

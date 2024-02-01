@@ -9,10 +9,11 @@ import SoftButton from "components/SoftButton";
 // Images
 import team2 from "assets/images/team-2.jpg";
 import { Fragment, useEffect, useState } from "react";
-import { Icon } from "@mui/material";
+import { Button, Icon } from "@mui/material";
 import { baseUrl } from "context";
 import { formatDate } from "context";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import AppColors from "assets/colors/AppColors";
 
 
 
@@ -40,7 +41,7 @@ function Author({ image, name, phone }) {
 const groupsTableData = () => {
   const navigate = useNavigate()
   const [allGroups, setAllGroups] = useState([])
-  
+
   const fetchGroups = async () => {
     const result = await fetch(`${baseUrl}/allAvailableGroups`, {
       method: 'POST',
@@ -57,73 +58,42 @@ const groupsTableData = () => {
       console.log(`groupTable mn fetchedGroups mn error`)
     }
   }
-  const freezeUser = async (id) => {
-    // console.log(`userid to freeze: ${id}`)
-    const result = await fetch(`${baseUrl}/freezeUser?userId=${id}`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
 
-    if (result.ok) {
-      const res = await result.json()
-      console.log('freeze res *********', res)
-    }
-    else {
-      console.log(`error in freezing`)
-    }
-  }
   useEffect(() => {
     fetchGroups()
   }, [])
   return {
 
     columns: [
-      // { name: "User_Name", align: "left" },
-      // { name: "PhoneNumber", align: "left" },
-      // { name: "Profile_Image", align: "left" },
-      // { name: "function", align: "left" },
       { name: "group_name", align: "left" },
-      { name: "registered", align: "center" },
+      { name: "created", align: "center" },
       { name: "group_members", align: "center" },
       { name: "action", align: "center" },
     ],
 
     rows: allGroups.map((group) => (
       {
-        // User_Name: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-        // {user.name}
-        // </SoftTypography>,
-        // PhoneNumber: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-        //   {user.phoneNo}
-        // </SoftTypography>,
-        // Profile_Image: <Author image={`${baseUrl}${user.profileImage}`} />,
         group_name: <Author image={`${baseUrl}${group.group_dp}`} name={group.group_name} />,
-        // function: <Function job="Manager" org="Organization" />,
         group_members: (
           <SoftTypography variant="caption" color="secondary" fontWeight="medium" >{group.members.length}</SoftTypography>
         ),
-        registered: (
+        created: (
           <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-            {formatDate(group.createdAt)}
+            
+            {new Date(group.createdAt).toLocaleDateString("en-GB")}
+            {/* {formatDateDifference(group.createdAt)} */}
           </SoftTypography>
         ),
         action: (
           <Fragment>
-            <SoftButton
-              variant="gradient"
-              color={"info"}
-              size={"small"}
-              text
-            >
+            <Button variant="text" type="button" size="small" style={{ backgroundColor: AppColors.view }}>
               <SoftTypography
                 variant="caption"
-                color="white"
+                color="black"
                 fontWeight="large"
                 onClick={() => navigate(`/groupDetail/${group._id}`)}
               > View  </SoftTypography>
-            </SoftButton>
+            </Button>
           </Fragment>
         ),
       }

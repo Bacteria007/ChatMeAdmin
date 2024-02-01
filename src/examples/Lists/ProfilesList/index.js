@@ -27,6 +27,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 import SoftButton from "components/SoftButton";
+import ListTitle from "../ListTitle";
 
 function ProfilesList({ title, profiles }) {
   const renderProfiles = profiles.map(({ image, name, description, action }) => (
@@ -69,18 +70,11 @@ function ProfilesList({ title, profiles }) {
   ));
 
   return (
-    <Card sx={{ height: "100%" }}>
-      <SoftBox pt={2} px={2}>
-        <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          {title}
-        </SoftTypography>
-      </SoftBox>
       <SoftBox p={2}>
         <SoftBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
           {renderProfiles}
         </SoftBox>
       </SoftBox>
-    </Card>
   );
 }
 

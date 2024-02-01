@@ -4,15 +4,15 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftAvatar from "components/SoftAvatar";
 import SoftBadge from "components/SoftBadge";
-import SoftButton from "components/SoftButton";
 
 // Images
 import team2 from "assets/images/team-2.jpg";
 import { Fragment, useEffect, useState } from "react";
-import { Icon } from "@mui/material";
+import { Badge, Button, Icon, Typography } from "@mui/material";
 import { baseUrl } from "context";
-import { formatDate } from "context";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { formatDateDifference } from "context";
+import AppColors from "assets/colors/AppColors";
 
 
 
@@ -51,7 +51,7 @@ const authorsTableData = () => {
       const fetchedUsersList = await result.json()
       console.log('alluser*********', fetchedUsersList)
       setAllUsers(fetchedUsersList)
-      console.log('alluser&&&&&', allUsers)
+
     }
     else {
       console.log(`authorsTable mn fetchusers mn error`)
@@ -68,7 +68,27 @@ const authorsTableData = () => {
 
     if (result.ok) {
       const res = await result.json()
-      console.log('freeze res *********', res)
+      console.log('freeze res +++++', res)
+      fetchUsers()
+    }
+    else {
+      console.log(`error in freezing`)
+    }
+  }
+  const unfreezeUser = async (id) => {
+    // console.log(`userid to freeze: ${id}`)
+    const result = await fetch(`${baseUrl}/unfreezeUser?userId=${id}`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (result.ok) {
+      const res = await result.json()
+      console.log('un freeze res -------', res)
+      fetchUsers()
+
     }
     else {
       console.log(`error in freezing`)
@@ -78,7 +98,6 @@ const authorsTableData = () => {
     fetchUsers()
   }, [])
   return {
-
     columns: [
       { name: "user", align: "left" },
       { name: "status", align: "center" },
@@ -88,55 +107,53 @@ const authorsTableData = () => {
 
     rows: allUsers.map((user) => (
       {
-        // User_Name: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-        // {user.name}
-        // </SoftTypography>,
-        // PhoneNumber: <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-        //   {user.phoneNo}
-        // </SoftTypography>,
-        // Profile_Image: <Author image={`${baseUrl}${user.profileImage}`} />,
         user: <Author image={`${baseUrl}${user.profileImage}`} name={user.name} phone={user.phoneNo} />,
-        // function: <Function job="Manager" org="Organization" />,
         status: (
-          <SoftBadge variant="gradient" badgeContent={user.isActive == true ? "active" : "inActive"} color="success" size="xs" container />
+          <SoftBadge variant="gradient" badgeContent={user.isActive == true ? "ACTIVE" : "INACTIVE"} color={user.isActive == true ? "success" : "secondary"} size="xs" container />
+
+          // <SoftTypography variant="caption" color={user.isActive == true ? "primary" : "secondary"} fontWeight="medium">
+          //   {user.isActive == true ? "ACTIVE" : "INACTIVE"}
+          // </SoftTypography>
         ),
         registered: (
           <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-            {formatDate(user.createdAt)}
+            {new Date(user.createdAt).toLocaleDateString("en-GB")}
+            {/* {formatDateDifference(user.createdAt)} */}
           </SoftTypography>
         ),
         action: (
           <Fragment>
-            <SoftButton
-              variant="gradient"
-              color={"success"}
-              size={"small"}
-              text
-            >
+            {user.isActive ==true?
+            (<Button variant="text" type="button" size="small" style={{ backgroundColor: AppColors.freez }}>
               <SoftTypography
                 variant="caption"
-                color="white"
+                color="black"
                 fontWeight="large"
-                
                 onClick={() => freezeUser(user._id)}
               >
                 Freez
-              </SoftTypography><br /> {/* <Icon sx={{ fontWeight: "bold" }}>edit</Icon> */}
-            </SoftButton> &nbsp;
-            <SoftButton
-              variant="gradient"
-              color={"info"}
-              size={"small"}
-              
-              text
-            >
+              </SoftTypography><br /> 
+            </Button> )
+            :
+            (<Button variant="text" type="button" size="small" style={{ backgroundColor: AppColors.freez }}>
               <SoftTypography
                 variant="caption"
-                color="white"
+                color="black"
                 fontWeight="large"
-              onClick={() => navigate(`/userDetail/${user._id}`)}
+                onClick={() => unfreezeUser(user._id)}
+              >
+                Unfreez
+              </SoftTypography><br /> 
+            </Button>)
+      } &nbsp;
+            <Button variant="text" type="button" size="small" style={{ backgroundColor: AppColors.view }}>
+              <SoftTypography
+                variant="caption"
+                color="black"
+                fontWeight="large"
+                onClick={() => navigate(`/userDetail/${user._id}`)}
               > View  </SoftTypography>
-            </SoftButton>
+            </Button>
           </Fragment>
         ),
       }
