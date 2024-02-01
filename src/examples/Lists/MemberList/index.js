@@ -29,45 +29,40 @@ import SoftAvatar from "components/SoftAvatar";
 import SoftButton from "components/SoftButton";
 import { baseUrl } from "context";
 import SoftBadge from "components/SoftBadge";
+import { Grid } from "@mui/material";
 
 function MemberList({ title, Member }) {
-  const renderProfiles = Member.map(({_id, profileImage, name, phoneNo,isActive }) => (
-    <SoftBox key={_id}  display="flex" alignItems="center" justifyContent="space-between" px={1} py={0.5} >
-    <SoftBox  component="li" display="flex" alignItems="center" py={1} mb={1}>
-      <SoftBox mr={2}>
-        <SoftAvatar src={`${baseUrl}${profileImage}`} alt="something here" variant="rounded" shadow="md" />
+  const renderProfiles = Member.map(({ _id, profileImage, name, phoneNo, isActive }) => (
+    <Grid key={_id} item xs={12} sm={6} md={4}>
+      <SoftBox component="li" display="flex" alignItems="center" py={1} mb={1}>
+        <SoftBox mr={2}>
+          <SoftAvatar src={`${baseUrl}${profileImage}`} alt="something here" variant="rounded" shadow="md" />
+        </SoftBox>
+        <SoftBox
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-start"
+          justifyContent="center"
+        >
+          <SoftTypography variant="button" fontWeight="medium">
+            {name}
+          </SoftTypography>
+          <SoftTypography variant="caption" color="text">
+            {phoneNo}
+          </SoftTypography>
+        </SoftBox>
       </SoftBox>
-      <SoftBox
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-start"
-        justifyContent="center"
-      >
-        <SoftTypography variant="button" fontWeight="medium">
-          {name}
-        </SoftTypography>
-        <SoftTypography variant="caption" color="text">
-          {phoneNo}
-        </SoftTypography>
-      </SoftBox>
-    </SoftBox>
-      <SoftBadge variant="gradient" badgeContent={isActive?"Active":"inActive"} color="success" size="xs" container />
-      </SoftBox>
+      {/* <SoftBadge variant="gradient" badgeContent={isActive?"Active":"inActive"} color="success" size="xs" container /> */}
+      {/* </SoftBox> */}
+    </Grid>
   ));
 
   return (
-    <Card sx={{ height: "100%" }}>
-      <SoftBox pt={2} px={4}>
-        <SoftTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          {title}
-        </SoftTypography>
-      </SoftBox>
       <SoftBox p={4}>
-        <SoftBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+        <Grid container spacing={1} marginX={10}>
           {renderProfiles}
-        </SoftBox>
+        </Grid>
       </SoftBox>
-    </Card>
   );
 }
 

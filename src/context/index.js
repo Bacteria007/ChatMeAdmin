@@ -88,14 +88,14 @@ const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGUR
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const appName = "ChatMe"
-const baseUrl = 'http://192.168.43.122:8888';
+const baseUrl = 'http://192.168.43.145:8888';
 const formatDate = (unformatedDate) => {
 
   // Convert MongoDB timestamp to JavaScript Date object
   const date = new Date(unformatedDate);
 
   // Format the date using Intl.DateTimeFormat
-  return  new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -105,6 +105,32 @@ const formatDate = (unformatedDate) => {
     timeZone: 'UTC', // Adjust timezone as needed
   }).format(date);
 }
+
+  const formatDateDifference = (timestamp) => {
+    const now = new Date();
+    const createdAt = new Date(timestamp);
+    const diffInMilliseconds = now - createdAt;
+    const seconds = Math.floor(diffInMilliseconds / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(months / 12);
+  
+    if (years > 0) {
+      return `${years} ${years === 1 ? 'year' : 'years'} ago`;
+    } else if (months > 0) {
+      return `${months} ${months === 1 ? 'month' : 'months'} ago`;
+    } else if (days > 0) {
+      return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+    } else if (hours > 0) {
+      return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+    } else if (minutes > 0) {
+      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
+    } else {
+      return 'Just now';
+    }
+  }
 export {
   SoftUIControllerProvider,
   useSoftUIController,
@@ -118,5 +144,7 @@ export {
   setLayout,
   formatDate,
   appName,
-  baseUrl
+  baseUrl,
+  formatDateDifference
+
 };

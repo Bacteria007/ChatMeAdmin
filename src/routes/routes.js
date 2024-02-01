@@ -36,15 +36,6 @@ const routes = [
     component: <ViewGroup />,
     noCollapse: true,
   },
-  // {
-  //   type: "collapse",
-  //   name: "GroupDetails",
-  //   key: "groupdetails",
-  //   route: "/groupDetail/:id",
-  //   icon: <Shop size="12px" />,
-  //   component: <memberTableData />,
-  //   noCollapse: true,
-  // },
   {
     type: "collapse",
     name: "Dashboard",
@@ -66,11 +57,11 @@ const routes = [
   },
   // {
   //   type: "collapse",
-  //   name: "Profile",
-  //   key: "profile",
-  //   route: "/profile",
-  //   icon: <CustomerSupport size="12px" />,
-  //   component: <Profile />,
+  //   name: "GroupDetails",
+  //   key: "groupdetails",
+  //   route: "/groupDetail/:id",
+  //   icon: <Shop size="12px" />,
+  //   component: <memberTableData />,
   //   noCollapse: true,
   // },
 ];

@@ -69,8 +69,6 @@ export default function App() {
     <Route path="/" element={<SignIn />} />
     <Route path="/signup" element={<SignUp />} />
     <Route path="/notfound" element={<NotFound />} />
-    {/* <Route path="/userDetail" element={<ViewUser />} /> */}
-    
     {getRoutes(routes)}
     {getRoutes(shopRoutes)}
     <Route path="*" element={<Navigate to="/notfound" />} />

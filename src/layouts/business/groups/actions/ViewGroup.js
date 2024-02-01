@@ -30,6 +30,8 @@ import { Author } from "layouts/business/customer/data/authorsTableData";
 import memberTableData from "../memberData/memberTableData";
 import MemberList from "examples/Lists/MemberList";
 import AdminList from "examples/Lists/AdminList";
+import { Avatar, Box } from "@mui/material";
+import ListTitle from "examples/Lists/ListTitle";
 // import projectsTableData from "./data/projectsTableData";
 
 function ViewGroup() {
@@ -40,13 +42,6 @@ function ViewGroup() {
     const [groupdetails, setGroupdetails] = useState([]);
     const [members, setMembers] = useState([])
     const [admins, setAdmins] = useState([])
-
-    // const columns = [
-    //     { name: "user", align: "left" },
-    //     { name: "status", align: "center" },
-    //     { name: "registered", align: "center" },
-    //     { name: "action", align: "center" },
-    // ]
 
     const fetchGroupDetails = async () => {
         console.log('jjjjjjjjj', id)
@@ -69,8 +64,8 @@ function ViewGroup() {
         }
     }
 
-    useEffect(async () => {
-        await fetchGroupDetails()
+    useEffect(() => {
+        fetchGroupDetails()
     }, [])
     // =======================authersTble
 
@@ -85,15 +80,19 @@ function ViewGroup() {
             <SoftBox py={3}>
                 <SoftBox mb={3}>
                     <Card>
-                    <SoftBox display="flex" flexDirection="column" pt={2} px={4}>
-                            <SoftBox mr={2}>
-                                <SoftAvatar src={`${baseUrl}${groupdetails.group_dp}`} alt={name} size="sm" variant="rounded" />
+                        {/* <SoftBox display="flex" alignItems="center" px={1} py={0.5} justifyContent="space-between"> */}
+                        <SoftBox display="flex" flexDirection="column" p={3}>
+                            <SoftBox mr={2} display={'flex'} flexDirection="row" alignItems="center">
+                                <Card style={{ justifyContent: 'center', alignItems: 'center', marginRight: 8, height: 70, width: 70 }}>
+                                    <Avatar style={{ height: 55, width: 55, borderRadius: '100%' }} src={`${baseUrl}${groupdetails.group_dp}`} alt={name} size="sm" variant="rounded" />
+                                </Card>
+                                <Box display={"flex"} flexDirection={"column"} alignItems={"flex-start"}>
+                                    <SoftTypography variant="h5">{groupdetails ? groupdetails.group_name : null}</SoftTypography>
+                                    {/* <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+                                        {formatDate(groupdetails ? groupdetails.createdAt : null)}
+                                    </SoftTypography> */}
+                                </Box>
                             </SoftBox>
-                            <SoftTypography variant="h5">{groupdetails ? groupdetails.group_name : null}</SoftTypography>
-                            {/* <SoftTypography variant="caption" color="secondary" fontWeight="medium">
-                                {formatDate(groupdetails ? groupdetails.createdAt : null)}
-                            </SoftTypography> */}
-
                         </SoftBox>
                         <SoftBox
                             sx={{
@@ -105,37 +104,10 @@ function ViewGroup() {
                                 },
                             }}
                         >
-                            {console.log(' there is group details', groupdetails.group_admin)}
-                            {/* <Table columns={columns} rows={rows} /> */}
-
-                            {/* <div>
-                                <Table >
-                                    <thead>
-                                        <tr>
-                                            <th>Member</th>
-                                            <th>Phone</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {groupdetails.members?groupdetails.members.map((item) => {
-                                            <tr key={item._id}>
-                                                {console.log("in tble",item.name)}
-                                                <div>
-                                                <img
-                                                     src={`${baseUrl}${item.profileImage}`}
-                                                    alt="Profile Image"
-                                                    style={{ marginLeft: 25, height: 50, width: 50 }}
-                                                />
-                                                <td>{item.name}</td>
-                                                <td>{item.phoneNo}</td></div>
-                                            </tr>
-                                        }):null}
-                                    </tbody>
-                                </Table>
-                            </div> */}
+                            <ListTitle title={"Admin"} count={admins.length} />
                             <AdminList title="Admin" Admin={admins} />
-                            <MemberList title="Member" Member={members} />
+                            <ListTitle title={"Members"} count={members.length} />
+                            <MemberList title="Members" Member={members} />
                         </SoftBox>
                     </Card >
                 </SoftBox >
