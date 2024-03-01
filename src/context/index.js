@@ -88,7 +88,7 @@ const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGUR
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const appName = "ChatMe"
-const baseUrl = 'http://192.168.43.145:8888';
+const baseUrl = 'http://192.168.43.122:8888';
 const formatDate = (unformatedDate) => {
 
   // Convert MongoDB timestamp to JavaScript Date object

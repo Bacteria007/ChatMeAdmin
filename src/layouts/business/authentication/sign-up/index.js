@@ -68,11 +68,11 @@ function SignUp() {
         if (response.data.save) {
           const res = await response.data.newAdmin
           console.log("signup", res)
-          await localStorage.setItem('isAdminLoggedIn', JSON.stringify(true))
-          await localStorage.setItem('adminId', res._id)
-          await localStorage.setItem('name', res.name)
-          await localStorage.setItem('profile', res.profileImage)
-          await localStorage.setItem('email', res.email)
+           localStorage.setItem('isAdminLoggedIn', JSON.stringify(true))
+           localStorage.setItem('adminId', res._id)
+           localStorage.setItem('name', res.name)
+           localStorage.setItem('profile', res.profileImage)
+           localStorage.setItem('email', res.email)
           navigate('/dashboard');
         }
         else {
